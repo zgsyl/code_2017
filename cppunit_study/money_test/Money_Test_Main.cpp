@@ -1,26 +1,26 @@
-#include "Money_Test.h"
-#include "cppunit/ui/text/TestRunner.h"
-#include "cppunit/TestCaller.h"
-#include "cppunit/TestSuite.h"
+/****************************************************
+Money_Test_Main.cpp
+2010.5.28
+
+********************************************************/
+#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/ui/text/TestRunner.h>
+
+
 
 int main()
 {
-    CppUnit::TextUi::TestRunner runner;
-    CppUnit::TestSuite *suite= new CppUnit::TestSuite();
+    	CppUnit::TextUi::TestRunner runner;
 
-    // 添加一个测试用例
+    /*从注册的TestSuite获取特定的TestSuite,
+没有参数的话则获取未命名的TestSuite*/
+   	CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("alltest");
 
-    	suite->addTest(new CppUnit::TestCaller<CMoneyTest> ("testConstructor", &CMoneyTest::testConstructor)); 
-	//suite->addTest(new CppUnit::TestCaller<CMoneyTest> ("testConstructor", &CMoneyTest::testConstructor));
-	suite->addTest(new CppUnit::TestCaller<CMoneyTest> ("testOptorAdd", &CMoneyTest::testOptorAdd));
+    /*添加这个TestSuite到TestRunner中*/
+    	runner.addTest(registry.makeTest());
 
+    /*运行测试*/
+   	runner.run();
 
-    runner.addTest( suite ); //指定运行TestSuite 
- 
-    //开始运行, 自动显示测试进度和测试结果
-
-    runner.run( "", true ); 
 }
-
- 
 
